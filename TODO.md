@@ -1,0 +1,17 @@
+- multi tab support, retards use firebase (maybe not good, makes it hard to test) for prod, can probably be done with localstorage :thumbsup:
+- extract configurations (server url for the frontend should be configurable for deployment)
+- check wtf is up with the openssl error, now fixed with:  `--openssl-legacy-provider start` in `package.json`
+- handle case in frontend where room doesnt exist (server says roomId is a nono, basically connect/disconnect handlers)
+- refactor backend to use proper model
+- rename user to player
+- handle key prop correctly in Board.js for users, its using username which fkn sucks
+- css (check microsoft guidelines for using in teams meet app)
+- deploy shit somewhere on cloud
+- deck of cards should be changable via combobox to use schemas other than fiboanacci
+- reveal should become hide
+- reset votes
+- clear card
+- script for running, both for prod and for local dev
+- usernames can be duplicated, dont allow
+- move items service into module
+- fix route, now hardcoded to localhost:3001

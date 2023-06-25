@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { WebSocketProvider } from '../WebSocketProvider/WebSocketProvider';
 import RevealBtn from './RevealBtn';
 import Deck from './Deck';
@@ -8,9 +8,8 @@ import Board from './Board';
 
 const Game = () => {
 
-  const { search } = useLocation();
-  const queryParams = new URLSearchParams(search);
-  const id = queryParams.get('id');
+  const router = useRouter();
+  const id = router.query.id;
   
   const [chosenUsername, setChosenUsername] = useState('');
   
@@ -18,7 +17,7 @@ const Game = () => {
     (chosenUsername === '')
     ? (<NameChooser onChosenName={setChosenUsername} />)
     : (<WebSocketProvider username={chosenUsername} roomId={id}>
-        <div className="game h-screen w-screen inline-flex flex-col -mt-8">
+        <div className="game h-screen w-screen inline-flex flex-col">
           <Board username={chosenUsername} roomId={id} />
           <RevealBtn />
           <Deck />

@@ -41,7 +41,7 @@ const Board = ({ username, roomId }) => {
     return (
         <div className='flex-1 overflow-auto'>
             <div className="z-10 w-full h-full absolute flex items-center justify-center -mt-14">
-                <div class="">
+                <div className="">
                     <button
                         className="bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 border-b-4 border-gray-700 hover:border-gray-500 rounded"
                         onClick={() => setNumCircles(numCircles + 1)}>
@@ -73,7 +73,7 @@ const Board = ({ username, roomId }) => {
                         <animated.circle
                             key={index}
                             r="10"
-                            stroke-width=".5"
+                            strokeWidth=".5"
                             stroke="black"
                             fill="white"
                             cx={springProps.x}

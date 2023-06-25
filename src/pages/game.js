@@ -1,8 +1,8 @@
-// import Game from "../components/Poker/Game.js"
+import Game from "@/components/Poker/Game";
 
 export default function GamePage() {
     return (
-      <div>what do you watch cat</div>
+      <Game />
     )
   }
   

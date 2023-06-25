@@ -9,7 +9,8 @@ const WebSocketProvider = ({ roomId, username, children }) => {
   console.log(username, roomId)
 
   useEffect(() => {
-    const socket = io('http://localhost:3001', {
+    const socket = io('/', {
+      path: '/api/socket.io',
       query: { username, roomId }
     });
 
