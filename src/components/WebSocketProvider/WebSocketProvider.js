@@ -6,18 +6,21 @@ const WebSocketContext = createContext();
 const WebSocketProvider = ({ roomId, username, children }) => {
   let [currentSocket, setCurrentSocket] = useState(null);
 
-  console.log(username, roomId)
-
   useEffect(() => {
-    const socket = io('/', {
-      path: '/api/socket.io',
-      query: { username, roomId }
+    const socket = io({
+      path: '/api/socket',
+      query: { username, roomId },
+      addTrailingSlash: false
     });
+
+    socket.connect();
 
     setCurrentSocket(socket);
 
     return () => {
-      socket.disconnect();
+      if (socket.readyState === 1) {
+        socket.disconnect();
+      }
     };
   }, [username, roomId]);
 

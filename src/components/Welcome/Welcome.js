@@ -28,7 +28,7 @@ const Welcome = (props) => {
     (creatingRoom === 'loading')
         ? (<h1>Loading...</h1>)
         : (
-            <div className="-mt-8 h-screen place-items-center grid grid-cols-1 gap-4 content-center">
+            <div className="h-screen place-items-center grid grid-cols-1 gap-4 content-center">
                 <h1 className="font-bold text-9xl flex flex-row justify-center">{(creatingRoom === 'error') ? "Something went wrong!" : "Welcome!"}</h1>
                 <div className="text-2xl">
                     <button className="rounded bg-gray-500 text-white hover:bg-gray-400 px-3 py-1" onClick={createRoom} style={{ float: "left", "marginRight": "10px" }}>Start</button>
