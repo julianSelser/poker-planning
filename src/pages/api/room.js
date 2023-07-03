@@ -1,7 +1,7 @@
 import { createRoom } from '../../utils/roomStore.js'
 
-export default function room(req, res) {
-  const roomId = createRoom();
+export default async function room(req, res) {
+  const roomId = await createRoom();
 
   console.log(`Generated room of id [${roomId}]`);
 

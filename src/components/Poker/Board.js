@@ -1,29 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { useWebSocket } from '../WebSocketProvider/WebSocketProvider.js';
 import { animated, useSprings } from "react-spring";
+import { getRoom } from './../../utils/roomStore.js';
+import { onSnapshot } from 'firebase/firestore';
 
 
 const Board = ({ username, roomId }) => {
-    const socket = useWebSocket();
-    const [usersState, setUsersState] = useState([]);
-    const [isRevealed, setIsRevealed] = useState(false);
-
+    // const socket = useWebSocket();
+    const [room, setRoom] = useState({});
     useEffect(() => {
-        if (!socket) return;
+        const roomRef = getRoom(roomId);
 
-        socket.on('refreshBoard', (usersState) => {
-            setUsersState(usersState.data);
+        const unsubscribe = onSnapshot(roomRef, (r) => {
+            if (r.exists()) {
+                setRoom(r.data());
+            }
         });
 
-        socket.on('revealCardsToggled', ({ isRevealed }) => {
-            setIsRevealed(isRevealed);
-        });
+        return () => unsubscribe();
+    }, [roomId]);
 
-        return () => {
-            socket.off('refreshBoard');
-            socket.off('revealCardsToggled');
-        };
-    });
+    // const [usersState, setUsersState] = useState([]);
+    // const [isRevealed, setIsRevealed] = useState(false);
+
+    // useEffect(() => {
+    //     if (!socket) return;
+
+    //     socket.on('refreshBoard', (usersState) => {
+    //         setUsersState(usersState.data);
+    //     });
+
+    //     socket.on('revealCardsToggled', ({ isRevealed }) => {
+    //         setIsRevealed(isRevealed);
+    //     });
+
+    //     return () => {
+    //         socket.off('refreshBoard');
+    //         socket.off('revealCardsToggled');
+    //     };
+    // });
     // ///
 
     // const [numCircles, setNumCircles] = useState(1);
@@ -96,7 +111,7 @@ const Board = ({ username, roomId }) => {
     //                         fill="black"
     //                         fontSize="2.5"
     //                     >
-                            
+
     //         {/* {
     //             usersState.map((userState) => (
     //                 <div key={userState.name}>{userState.name === username ? "You" : userState.name} chose {
@@ -114,10 +129,12 @@ const Board = ({ username, roomId }) => {
     return (
         <div>
             {
-                usersState.map((userState) => (
-                    <div key={userState.name}>{userState.name === username ? "You" : userState.name} chose {
-                        isRevealed ? userState.chosenCard : "***"}</div>
-                ))
+                (!room.users)
+                    ? <div>Loading...</div>
+                    : Object.values(room.users).map((usr) => (
+                        <div key={usr.name}>{usr.name === username ? "You" : usr.name} chose {
+                            room.isRevealed ? usr.chosenCard : "***"}</div>
+                    ))
             }
         </div>
     );

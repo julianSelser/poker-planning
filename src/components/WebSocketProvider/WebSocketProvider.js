@@ -13,8 +13,6 @@ const WebSocketProvider = ({ roomId, username, children }) => {
       addTrailingSlash: false
     });
 
-    socket.connect();
-
     setCurrentSocket(socket);
 
     return () => {
